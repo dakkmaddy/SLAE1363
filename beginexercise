@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# Quick script to get the files we need present in the current directory.
+#
+# Verify current directory
+#
+locale=$(pwd)
+if [ $locale != "/home/dakkmaddy/SLAE/Shellcode/Trials" ]
+then
+	echo "[+] Moving to Trials directory!"
+	cd /home/dakkmaddy/SLAE/Shellcode/Trials
+fi
+read -p "[+] Enter the name of new directory: " new
+mkdir $new
+finddir=/home/dakkmaddy/SLAE/Shellcode/Trials/$new
+echo "[+] Let's tar everything in the tank directory"
+cd Tank/
+sleep 1
+echo "[+] Obtain file list"
+find -type f | sed 's/.\///' > list.txt
+sleep 1
+echo "Compressing all the file in tank directory"
+tar -cvf practice.tar *.*
+sleep 1
+echo "[+] Changing directory"
+cd /home/dakkmaddy/SLAE/Shellcode/Trials/$new
+#echo "! Test"
+#pwd
+#exit
+echo "[+] Copying files from the tank"
+cp /home/dakkmaddy/SLAE/Shellcode/Trials/Tank/practice.tar practice.tar
+# We no long need to tarball in the tank!
+rm /home/dakkmaddy/SLAE/Shellcode/Trials/Tank/practice.tar
+echo "[+] Extracting ...."
+sleep .5
+tar -xf practice.tar
+echo "[+] Renaming files"
+cp template.c $new.c
+cp template.nasm $new.nasm
+echo "[+] Removing template files!"
+rm template*
+echo "[+] Removing tarball"
+rm practice.tar
+echo "[+] Done!"
+echo "[+] Listing files"
+ls -l
+echo "[+] Enjoy!"
+exit
+
