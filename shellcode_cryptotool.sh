@@ -73,7 +73,7 @@ fi
 # Using the famous Command Line Fu objdump command to extract shellcode from the compiled program
 #
 echo "[+] extracting shellcode from $1 and creating a file"
-objdump -d ./$1 |grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g' | tee -a unencryptsc.txt
+objdump -d ./$1 |grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\x/g'|paste -d '' -s |sed 's/^/"/'|sed 's/$/"/g' | tee unencryptsc.txt
 sleep 1
 echo "[+] Use openssl to encrypt with $2 cipher"
 #
